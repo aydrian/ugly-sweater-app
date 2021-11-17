@@ -10,7 +10,7 @@ async function twilioHandler(event, _context) {
     };
   }
   const { Body } = event.parsedBody;
-  const [context, entry] = Body.split(" ");
+  const [contest, entry] = Body.split(" ");
 
   const twiml = new Twilio.twiml.MessagingResponse();
   const message = twiml.message();
