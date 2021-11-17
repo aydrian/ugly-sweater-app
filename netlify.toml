@@ -1,0 +1,14 @@
+[build]
+command = "npm run build"
+publish = "public"
+
+[[redirects]]
+from = "/webhooks/twilio"
+to = "/.netlify/functions/webhooks_twilio"
+status = 200
+
+[functions]
+node_bundler = "esbuild"
+
+[template.environment]
+DATABASE_URL = "Database Connection String"

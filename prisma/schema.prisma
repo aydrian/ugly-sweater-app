@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model contests {
+  id          String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  description String?
+  max_votes   BigInt?   @default(1)
+  entries     entries[]
+  votes       votes[]
+}
+
+model entries {
+  id         String   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  picture    Bytes?
+  contest_id String   @db.Uuid
+  contest    contests @relation(fields: [contest_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_contest_id_ref_contests")
+  votes      votes[]
+
+  @@id([contest_id, id])
+  @@unique([name, contest_id])
+}
+
+model votes {
+  contest_id String   @db.Uuid
+  entry_id   String   @db.Uuid
+  voter_id   String
+  contest    contests @relation(fields: [contest_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_contest_id_ref_contests")
+  entry      entries  @relation(fields: [entry_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_entry_id_ref_entries")
+
+  @@id([contest_id, entry_id, voter_id])
+  @@index([voter_id])
+}
