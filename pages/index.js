@@ -27,7 +27,7 @@ export default function Home() {
         {contests.map((contest) => {
           return (
             <ListItem>
-              <NextLink href={`/contest/${contest.id}`} passHref>
+              <NextLink href={`/contests/${contest.id}`} passHref>
                 <Link>{contest.name}</Link>
               </NextLink>
             </ListItem>
