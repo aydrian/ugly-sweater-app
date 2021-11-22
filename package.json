@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^3.5.0",
+    "node-fetch": "^3.1.0",
     "twilio": "^3.71.1"
   },
   "devDependencies": {

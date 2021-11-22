@@ -20,7 +20,8 @@ const withVerifyTwilio = (handler) => {
       !validateRequest(
         twilioAuthToken,
         twilioSignature,
-        `${process.env.URL}/webhooks/twilio`,
+        `https://5c5f-100-37-249-117.ngrok.io/webhooks/twilio`,
+        //`${process.env.URL}/webhooks/twilio`,
         parsedBody
       )
     ) {

@@ -17,12 +17,13 @@ model contests {
 }
 
 model entries {
-  id         String   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name       String
-  picture    Bytes?
-  contest_id String   @db.Uuid
-  contest    contests @relation(fields: [contest_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_contest_id_ref_contests")
-  votes      votes[]
+  id           String   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String
+  picture      Bytes?
+  picture_type String?
+  contest_id   String   @db.Uuid
+  contest      contests @relation(fields: [contest_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_contest_id_ref_contests")
+  votes        votes[]
 
   @@id([contest_id, id])
   @@unique([name, contest_id])
