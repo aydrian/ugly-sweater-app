@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { PrismaClient } from "@prisma/client";
 import fetch from "node-fetch";
+import { pusher } from "./pusher";
 
 const prisma = new PrismaClient();
 
@@ -33,7 +34,7 @@ export const createEntry = async (
     return "Contest does not exist.";
   }
   const media_buffer = await fetchMedia(media_url);
-  await prisma.entries.create({
+  const createEntry = await prisma.entries.create({
     data: {
       name: entry,
       picture: media_buffer,
@@ -41,8 +42,15 @@ export const createEntry = async (
       contest: {
         connect: { id: findContest.id }
       }
+    },
+    select: {
+      id: true,
+      name: true,
+      votes: true
     }
   });
+
+  await pusher.trigger(findContest.id, "new-entry", createEntry);
 
   return "Thank you for your entry. Good luck!";
 };
@@ -93,6 +101,19 @@ export const vote = async (contest, entry, phoneNumber) => {
       entry_id: findEntry.id
     }
   });
+
+  const newEntry = await prisma.entries.findUnique({
+    where: {
+      id: findEntry.id
+    },
+    select: {
+      id: true,
+      name: true,
+      votes: true
+    }
+  });
+
+  await pusher.trigger(findContest.id, "vote", newEntry);
 
   const remainingVotes = findContest.max_votes - BigInt(voteCount) - BigInt(1);
   return `Thank you for your vote. Remaining votes for this contest: ${remainingVotes}`;
