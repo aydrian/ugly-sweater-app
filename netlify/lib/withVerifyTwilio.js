@@ -21,7 +21,7 @@ const withVerifyTwilio = (handler) => {
         twilioAuthToken,
         twilioSignature,
         // `https://5c5f-100-37-249-117.ngrok.io/webhooks/twilio`,
-        `${process.env.URL}/webhooks/twilio`,
+        "https://ugly-sweater-app.netlify.app/webhooks/twilio",
         parsedBody
       )
     ) {
