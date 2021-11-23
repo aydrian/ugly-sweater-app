@@ -1,41 +1,76 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import {
-  Container,
-  Heading,
-  Image,
-  ListItem,
-  UnorderedList
-} from "@chakra-ui/react";
+import Pusher from "pusher-js";
+import { Container, Heading, Wrap, WrapItem } from "@chakra-ui/react";
+import { PrismaClient } from "@prisma/client";
 
-const Contest = () => {
-  const router = useRouter();
-  const { contestId } = router.query;
-  const [contest, setContest] = useState({});
+import Entry from "@components/Entry";
+
+const prisma = new PrismaClient();
+
+const Contest = ({ contest }) => {
+  const [entries, setEntries] = useState(contest.entries);
 
   useEffect(() => {
-    fetch(`/api/contests/${contestId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setContest(data);
-      });
+    Pusher.logToConsole = true;
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER
+    });
+
+    const channel = pusher.subscribe(contest.id);
+    channel.bind("new-entry", function (data) {
+      setEntries((prevState) => [...prevState, data]);
+    });
+
+    channel.bind("vote", function (data) {
+      setEntries((prevState) =>
+        prevState.map((entry) => (entry.id === data.id ? data : entry))
+      );
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
   }, []);
 
   return (
-    <Container>
+    <Container maxW="container.lg">
       <Heading>Contest: {contest.name}</Heading>
-      <UnorderedList>
-        {contest.entries?.map((entry) => {
+      <Wrap spacing="30px" justify="center">
+        {entries.map((entry) => {
           return (
-            <ListItem key={entry.id}>
-              <Image src={`/api/getImage?entryId=${entry.id}`} />
-              {entry.name} {entry.votes.length}
-            </ListItem>
+            <WrapItem key={entry.id}>
+              <Entry data={entry} />
+            </WrapItem>
           );
         })}
-      </UnorderedList>
+      </Wrap>
     </Container>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { contestId } = context.query;
+  const contest = await prisma.contests.findUnique({
+    select: {
+      id: true,
+      name: true,
+      // BigInt problems
+      // max_votes: true,
+      entries: {
+        select: {
+          id: true,
+          name: true,
+          votes: true
+        }
+      }
+    },
+    where: {
+      id: contestId
+    }
+  });
+
+  return { props: { contest } };
+}
 
 export default Contest;

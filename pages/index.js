@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import {
   Container,
@@ -7,18 +6,11 @@ import {
   ListItem,
   UnorderedList
 } from "@chakra-ui/react";
+import { PrismaClient } from "@prisma/client";
 
-export default function Home() {
-  const [contests, setContests] = useState([]);
+const prisma = new PrismaClient();
 
-  useEffect(() => {
-    fetch("/api/contests")
-      .then((res) => res.json())
-      .then((data) => {
-        setContests(data);
-      });
-  }, []);
-
+export default function Home({ contests }) {
   return (
     <Container>
       <Heading>Ugly Sweater Contest</Heading>
@@ -26,7 +18,7 @@ export default function Home() {
       <UnorderedList>
         {contests.map((contest) => {
           return (
-            <ListItem>
+            <ListItem key={contest.id}>
               <NextLink href={`/contests/${contest.id}`} passHref>
                 <Link>{contest.name}</Link>
               </NextLink>
@@ -36,4 +28,15 @@ export default function Home() {
       </UnorderedList>
     </Container>
   );
+}
+
+export async function getServerSideProps() {
+  const contests = await prisma.contests.findMany({
+    select: {
+      id: true,
+      name: true
+    }
+  });
+
+  return { props: { contests } };
 }

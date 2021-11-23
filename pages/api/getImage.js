@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { entryId } = req.query;
-  console.log(entryId);
 
   const findEntry = await prisma.entries.findUnique({
     select: {
