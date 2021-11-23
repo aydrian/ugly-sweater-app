@@ -28,6 +28,7 @@
     "twilio": "^3.71.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.0.0-beta.4",
     "prisma": "^3.5.0"
   }
 }
