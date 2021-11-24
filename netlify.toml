@@ -1,6 +1,6 @@
 [build]
 command = "npm run build"
-publish = "public"
+publish = ".next"
 
 [[redirects]]
 from = "/webhooks/twilio"
@@ -12,3 +12,6 @@ node_bundler = "esbuild"
 
 [template.environment]
 DATABASE_URL = "Database Connection String"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
