@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import Pusher from "pusher-js";
-import { Container, Heading, Wrap, WrapItem } from "@chakra-ui/react";
+import NextLink from "next/link";
+import Head from "next/head";
+import {
+  Box,
+  Container,
+  Heading,
+  Flex,
+  Link,
+  Text,
+  Wrap,
+  WrapItem
+} from "@chakra-ui/react";
 import { PrismaClient } from "@prisma/client";
 
 import Entry from "@components/Entry";
@@ -35,7 +46,25 @@ const Contest = ({ contest }) => {
 
   return (
     <Container maxW="container.lg">
-      <Heading>Contest: {contest.name}</Heading>
+      <Head>
+        <title>Ugly Sweater Contest: {contest.name}</title>
+      </Head>
+      <Flex my={4} justify="space-between">
+        <Box>
+          <Heading>Contest: {contest.name}</Heading>
+          <Text>
+            To enter, text a picture with {contest.name} and your name to{" "}
+            {process.env.NEXT_PUBLIC_TWILIO_NUMBER}.
+          </Text>
+          <Text>
+            To vote, text {contest.name} and the name of the entry to{" "}
+            {process.env.NEXT_PUBLIC_TWILIO_NUMBER}.
+          </Text>
+        </Box>
+        <NextLink href={`/`} passHref>
+          <Link>Back to Contests</Link>
+        </NextLink>
+      </Flex>
       <Wrap spacing="30px" justify="center">
         {entries.map((entry) => {
           return (
