@@ -16,7 +16,7 @@ export default function Entry({data}) {
           alt={`Picture of ${data.name}`}
           roundedTop="lg"
           boxSize="200px"
-          objectFit="cover"
+          objectFit="contain"
         />
 
         <Box p="2">
