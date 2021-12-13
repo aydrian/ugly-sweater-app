@@ -14,21 +14,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@chakra-ui/react": "^1.7.2",
-    "@emotion/react": "^11.6.0",
+    "@chakra-ui/react": "^1.7.3",
+    "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@prisma/client": "^3.5.0",
+    "@prisma/client": "^3.6.0",
     "framer-motion": "^4.1.17",
-    "next": "^12.0.4",
+    "next": "^12.0.7",
     "node-fetch": "^3.1.0",
     "pusher": "^5.0.0",
     "pusher-js": "^7.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "twilio": "^3.71.1"
+    "twilio": "^3.71.3"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.0.0-beta.11",
-    "prisma": "^3.5.0"
+    "@netlify/plugin-nextjs": "^4.0.0-rc.2",
+    "prisma": "^3.6.0"
   }
 }

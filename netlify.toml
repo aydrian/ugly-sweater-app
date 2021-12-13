@@ -12,6 +12,11 @@ node_bundler = "esbuild"
 
 [template.environment]
 DATABASE_URL = "Database Connection String"
+TWILIO_AUTH_TOKEN = "Twilio Auth Token"
+NEXT_PUBLIC_TWILIO_NUMBER = "Twilio Phone number"
+PUSHER_APP_ID = "Pusher App ID"
+NEXT_PUBLIC_PUSHER_KEY = "Pusher Key"
+NEXT_PUBLIC_PUSHER_CLUSTER = "Pusher Cluster"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"
