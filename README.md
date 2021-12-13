@@ -3,6 +3,7 @@
 ## Enter and cast votes for an Ugly Sweater contest using SMS.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d4f0e287-ef65-4829-a7ea-2c95a4861da7/deploy-status)](https://app.netlify.com/sites/ugly-sweater-app/deploys)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This app consists of a Dashboard displaying the status of the contest and a serverless backend that will facilitate bootstrapping the dashboard and handling updates from SMS messages using websockets.
 
