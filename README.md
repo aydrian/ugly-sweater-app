@@ -52,15 +52,26 @@ A [script has been provided](./scripts/init_database.sql) to create the followin
 
 ### CockroachDB Serverless Configuration
 
-**TODO** Sign up and Create Cluster, Run script to create database and tables
+- [Create a free serverless cluster](https://www.cockroachlabs.com/docs/cockroachcloud/quickstart.html)
+- Execute the [provided script](./scripts/init_database.sql) using the SQL client to create the database and tables;
+  ```
+  cockroach sql --url [Connection string] --file ./scripts/init_database.sql
+  ```
+- Save the connection string to the `DATABASE_URL` environment variable
 
 ### Twilio SMS Configuration
 
-**TODO** Sign up and create project. Buy phone number and add Inbound SMS webhook
+- [Sign up for a free Twilio Trial Account](https://www.twilio.com/docs/usage/tutorials/how-to-use-your-free-trial-account)
+- Configure the Messaging Wehook - In the Twilio phone number configuration, set the Messageing > "A Message Comes In" to Webhook with the url `https://{your-netlify-site-name}.app/webhooks/twilio` and select HTTP POST.
+- Note the Auth Token and phone number for the environment variables below.
+
+**NOTE** This app will only work with verified phone numbers while using a Twilio trial account.
 
 ### Pusher Channels Configuration
 
-**TODO** Sign up and create a project
+- Create a [free Pusher Channels Account](https://dashboard.pusher.com/accounts/sign_up)
+- Create a new Channels app named `ugly-sweater-app`
+- Use the App Keys for the Pusher environment variables below
 
 ### Installation options
 
