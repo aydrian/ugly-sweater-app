@@ -18,6 +18,7 @@ To cast a vote, text the context and name of the entry.
 - [Pusher Channels](https://pusher.com/channels) for Websockets
 - [Twilio](https://www.twilio.com/) for inbound/outbound SMS
 - [CockroachDB Serverless](https://www.cockroachlabs.com/) for database
+- [Prisma](https://www.prisma.io/cockroachdb) for connecting to the database
 
 ### Workflow
 
@@ -25,7 +26,13 @@ To cast a vote, text the context and name of the entry.
 
 ### Database Schema
 
-A [script has been provided](./scripts/init_database.sql) to create the following tables.
+These tables can be created using Prisma Migrate
+
+```
+npx prisma migrate dev --name init
+```
+
+A [sql script has also been provided](./scripts/init_database.sql) to create the following tables.
 
 #### contests
 
@@ -53,11 +60,18 @@ A [script has been provided](./scripts/init_database.sql) to create the followin
 ### CockroachDB Serverless Configuration
 
 - [Create a free serverless cluster](https://www.cockroachlabs.com/docs/cockroachcloud/quickstart.html)
-- Execute the [provided script](./scripts/init_database.sql) using the SQL client to create the database and tables;
-  ```
-  cockroach sql --url [Connection string] --file ./scripts/init_database.sql
-  ```
 - Save the connection string to the `DATABASE_URL` environment variable
+- Run Prisma Migrate
+
+  ```
+  npx prisma migrate dev --name init
+  ```
+
+OR Execute the [provided script](./scripts/init_database.sql) using the SQL client to create the database and tables;
+
+```
+cockroach sql --url [Connection string] --file ./scripts/init_database.sql
+```
 
 ### Twilio SMS Configuration
 
