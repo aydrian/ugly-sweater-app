@@ -17,7 +17,7 @@
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@prisma/client": "^3.7.0",
+    "@prisma/client": "^4.1.1",
     "framer-motion": "^5.5.5",
     "next": "^12.0.7",
     "node-fetch": "^3.1.0",
@@ -25,10 +25,10 @@
     "pusher-js": "^7.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "twilio": "^3.72.0"
+    "twilio": "^3.80.0"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^4.1.1",
-    "prisma": "^3.7.0"
+    "prisma": "^4.1.1"
   }
 }
