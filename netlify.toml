@@ -7,6 +7,11 @@ from = "/webhooks/twilio"
 to = "/.netlify/functions/webhooks_twilio"
 status = 200
 
+[[redirects]]
+from = "/webhooks/cdc"
+to = "/.netlify/functions/webhooks_cdc"
+status = 200
+
 [functions]
 node_bundler = "esbuild"
 
